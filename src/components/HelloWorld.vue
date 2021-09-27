@@ -1,30 +1,33 @@
 <template>
-  <div class="hello">
+  <div>
+ 
+   
   </div>
 </template>
 
 <script>
+
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
-}
+  name: "simple",
+  components: {
+
+  },
+  data() {
+    return {
+      items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => {
+        return { title: `Item ${i}`, content: `🚀 Simple content ${i}` };
+      }),
+      options: {},
+    };
+  },
+};
 </script>
 
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.item {
+  padding: 16px 24px;
+  border-radius: 3px;
+  background: #f5f5f5;
 }
 </style>
+

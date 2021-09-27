@@ -3,11 +3,10 @@
     <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
     <HelloWorld msg="Welcome to Your Vue.js App"/>
     <section>
-      <div class="container">
+      <div class="container py-3">
         <div class="row">
             <div class="card">
               <div class="card-body">
-                {{payload}}
               </div>
           </div>
         </div>
@@ -16,11 +15,34 @@
     <!-- another section -->
     <section>
       <div class="container">
-        <div class="row">
-          <!-- <TheTable :veriholder="title1" /> -->
-           <TheTable v-for="item in items" :data="items" :key="item" :resim="item.image" :url="item.url" :title="title2"/>
-           <!-- s -->
-        </div>
+        <div class="row mx-auto py-2">
+            <div class="col border">
+              <h2>Vue</h2>
+              <img src="../assets/js.png" width="250" alt="">
+                  <TheTable  :data="this.$store.getters.vue"  />
+            </div>
+            <div class="col border">
+              <h2>Design</h2>
+              <img src="../assets/undraw.png" width="250" alt="">
+                  <TheTable  :data="this.$store.getters.design"  />
+            </div>
+            <div class="col border">
+              <h2>Development</h2>
+              <img src="../assets/dev.png" width="250" alt="">
+                  <TheTable  :data="this.$store.getters.development"  />
+            </div>
+          </div>
+
+          <!-- <div class="row">
+             <div class="col border">
+              <img src="../assets/apps.png" width="250" alt="">
+                  <TheTable  :data="this.$store.getters.vue"  />
+            </div>
+              <div class="col border">
+              <img src="../assets/js.png" width="250" alt="">
+                  <TheTable  :data="this.$store.getters.vue"  />
+            </div>
+          </div> -->
       </div>
     </section>
   </div>
@@ -29,6 +51,7 @@
 <script>
 import HelloWorld from '@/components/HelloWorld.vue'
 import TheTable from '@/components/TheTable.vue'
+import axios from 'axios'
 export default {
   name: 'Home',
   components: {
@@ -37,23 +60,17 @@ export default {
   },
   data () {
     return {
-      payload: [],
-      title2: 'Erdem',
-      resim: 'https://upload.wikimedia.org/wikipedia/commons/3/32/Dribbble_logo.png',
-      items: [
-        { image: 'https://upload.wikimedia.org/wikipedia/commons/3/32/Dribbble_logo.png', url: 'https://dribbble.com/' },
-        { image: 'https://www.uidesigndaily.com/public/img/uidesigndaily-logo.svg', url: 'https://www.uidesigndaily.com/' },
-        { image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Behance_logo.svg/1280px-Behance_logo.svg.png', url: 'https://www.behance.net/' },
-        { image: 'https://upload.wikimedia.org/wikipedia/commons/3/32/Dribbble_logo.png', url: 'https://dribbble.com/' },
-        { image: 'https://www.uidesigndaily.com/public/img/uidesigndaily-logo.svg', url: 'https://www.uidesigndaily.com/' }
-      ]
+
     }
   },
   methods: {
     getData () {
-      fetch('./db.json')
-        .then(response => response.json())
-        .then(json => (this.payload = JSON.parse(json)))
+      axios.get('https://ted2xmen.github.io/bookmarks/db.json')
+        .then((res) => {
+          this.$store.state.bookmarks = res.data
+        }).catch((err) => {
+          console.log(err)
+        })
     }
   },
   created () {
